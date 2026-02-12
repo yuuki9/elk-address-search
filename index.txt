@@ -1,0 +1,66 @@
+{
+  "settings": {
+    "number_of_shards": 1,
+    "number_of_replicas": 0,
+    "analysis": {     
+      "analyzer": {
+        "autocomplete_index_analyzer": {
+          "type": "custom",
+          "tokenizer": "nori_tokenizer", 
+          "filter": ["lowercase", "edge_ngram_filter"] 
+        },
+        "autocomplete_search_analyzer": {
+          "type": "custom",
+          "tokenizer": "nori_tokenizer",
+          "filter": ["lowercase"] // 검색할 땐 쪼개지 않음
+        }
+      },
+      "filter": {
+        "edge_ngram_filter": {
+          "type": "edge_ngram",
+          "min_gram": 1,
+          "max_gram": 20
+        }
+      }
+    }
+  },
+  "mappings": {
+    "properties": {
+      "admin_code": {
+        "type": "text",
+        "fields": {
+          "keyword": {"type": "keyword", "ignore_above": 256}
+        }
+      },
+      "building_name": {
+        "type": "text",
+        "analyzer": "autocomplete_index_analyzer",
+        "search_analyzer": "autocomplete_search_analyzer"
+      },
+      "dong": {
+        "type": "text",
+        "analyzer": "autocomplete_index_analyzer",
+        "search_analyzer": "autocomplete_search_analyzer"
+      },
+      "full_address": {
+        "type": "text",
+        "analyzer": "autocomplete_index_analyzer",
+        "search_analyzer": "autocomplete_search_analyzer"
+      },
+      "location": {"type": "geo_point"},
+      "road_name": {
+        "type": "text",
+        "analyzer": "autocomplete_index_analyzer",
+        "search_analyzer": "autocomplete_search_analyzer"
+      },
+      "sido": {
+        "type": "text",
+        "fields": {"keyword": {"type": "keyword", "ignore_above": 256}}
+      },
+      "sigungu": {
+        "type": "text",
+        "fields": {"keyword": {"type": "keyword", "ignore_above": 256}}
+      }
+    }
+  }
+}
