@@ -1,0 +1,9 @@
+cluster.name: "docker-cluster"
+network.host: 0.0.0.0
+http.port: 9200
+
+# 보안 비활성화 (테스트/폐쇄망 용도)
+xpack.security.enabled: false
+
+# 단일 노드 모드
+discovery.type: single-node

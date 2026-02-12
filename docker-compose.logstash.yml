@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.13.0
+    container_name: logstash
+    environment:
+      - LS_JAVA_OPTS=-Xmx4g -Xms4g
+    volumes:
+      - ./logstash/pipeline/:/usr/share/logstash/pipeline/
+      - ./address.csv:/usr/share/logstash/data/address.csv
+      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml
+      - ./logstash/sincedb/.sincedb_address:/usr/share/logstash/.sincedb_address
+    command: logstash -f /usr/share/logstash/pipeline/address_pipeline.conf
